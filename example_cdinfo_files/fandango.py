@@ -1,0 +1,11 @@
+{'artist':'The Phoenix Foundation',
+ 'album':'Fandango - disk A',
+ 'genre':'Alternative',
+ 'year':'2013',
+ 'titles':['Black Mould',
+           'Modern Rock',
+           'The Captain',
+           'Thames Soup',
+           'Evolution Did',
+           'Inside Me Dead',
+           'Corale']}

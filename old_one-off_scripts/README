@@ -1,0 +1,12 @@
+The scripts in this folder were used once when the mp3 folder got a bit messy.
+Multiple versions of the same songs, spaces in filenames, m4as which are less
+playable.  I also prefer just to have lowercase filenames (its best to stick to
+one convection to avoid e.g. multiple directorys for the same artist.  The ideal
+order to run these would be:
+
+1. m4a2mp3.py
+2. tidy_artists.py
+3. tidy_albums.py
+4. tidy_tracks.py
+
+remove_dirs_not_containing_mp3s.py looks a bit dangerous.

@@ -1,3 +1,4 @@
+#!/bin/env python
 import os
 import logging
 from optparse import OptionParser
@@ -34,6 +35,6 @@ for f in files[:-1]:
         wav_file=f_.replace('.m4a','.wav')
         run_command('faad %s' % f_)
         mp3_file=f_.replace('.m4a','.mp3')
-        run_command('lame %s %s' %(wav_file, mp3_file))
+        run_command('lame -h -b 320 %s %s' %(wav_file, mp3_file))
         run_command('rm %s %s' %(f_,wav_file))
 

@@ -1,11 +1,17 @@
 import DiscID, CDDB
 import logging
 import os
+import musicbrainz2.disc as mbdisc
+import musicbrainz2.webservice as mbws
 
 LOGGER = logging.getLogger(__name__)
 
 class CDInfoError(Exception):
     pass
+
+class CDDBError(Exception):
+    pass
+
 
 class CDInfo(object):
     def __init__(self):
@@ -63,7 +69,7 @@ class CDInfo(object):
         else:
             msg = "failure getting disc info, status %i" % query_stat
             LOGGER.error(msg)
-            raise Exception(msg)
+            raise CDDBError(msg)
         
         #Make sure the genre is OK
         genrelist=os.popen('lame --genre-list').readlines()
@@ -82,4 +88,17 @@ class CDInfo(object):
         self.artist = artist.strip()
         self.album = album.strip()
         self.year = read_info['DYEAR']
+        return self
+
+    def from_musicbrainz(self):
+        disc = mbdisc.readDisc()
+        filter_ = mbws.ReleaseFilter(discId=disc.getId())
+        service = mbws.WebService()
+        query = mbws.Query(service)
+        results = query.getReleases(filter_)
+        self.genre = '' #musicbrainz does not support genres
+        self.artist = results[0].release.artist.name
+        self.album = results[0].release.getTitle()
+        self.year = results[0].release.getEarliestReleaseDate().split('-')[0]
+        self.titles = [track.getTitle() for track in results[0].release.getTracks()]
         return self

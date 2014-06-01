@@ -4,7 +4,13 @@ import os
 
 class Ripper(object):
     def __init__(self):
-        self.out_dir = tempfile.mkdtemp(dir = '/dev/shm')
+        self.out_dir = tempfile.mkdtemp(dir = '/tmp')
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self,*args):
+        return False
     
     def rip(self,track_num):
         out_file = tempfile.mkstemp(dir = self.out_dir, suffix = '.wav')[1]

@@ -40,12 +40,7 @@ def main():
     if args.cdinfo_file:
         cd_info.from_dict(eval(open(args.cdinfo_file).read()))
     else:
-        try:
-            cd_info.from_cddb()
-        except cdinfo.CDDBError:
-            msg = "Failed CDDB lookup - trying MusicBrainz"
-            LOGGER.warning(msg)
-            cd_info.from_musicbrainz()
+        cd_info.from_musicbrainz()
 
     encoding_queue = Queue.Queue()
     encoder = encode.Encoder(cd_info, args.base_mp3_dir)
